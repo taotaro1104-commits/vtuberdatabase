@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VTuber Database</title>
+    <meta
+      name="description"
+      content="VTuberの所属、言語、出典信頼度、公式アカウントを検索できるデータベース。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">V</div>
+        <div>
+          <h1>VTuber Database</h1>
+          <p>所属・言語・出典状態で探すVTuberデータベース</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span id="generatedAt"></span>
+        <span id="totalCount"></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="stats" aria-label="Database summary">
+        <div>
+          <span class="stat-value" id="statTotal">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div>
+          <span class="stat-value" id="statAgency">0</span>
+          <span class="stat-label">Agency</span>
+        </div>
+        <div>
+          <span class="stat-value" id="statOfficial">0</span>
+          <span class="stat-label">Official checked</span>
+        </div>
+        <div>
+          <span class="stat-value" id="statReview">0</span>
+          <span class="stat-label">Needs review</span>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Search controls">
+        <label class="search-box">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="名前、所属、タグ、URLで検索" autocomplete="off" />
+        </label>
+        <label>
+          <span>Agency</span>
+          <select id="agencySelect"></select>
+        </label>
+        <label>
+          <span>Language</span>
+          <select id="languageSelect"></select>
+        </label>
+        <label>
+          <span>Source</span>
+          <select id="sourceSelect"></select>
+        </label>
+        <div class="toggle-row" role="group" aria-label="Flags">
+          <label class="toggle">
+            <input id="agencyOnly" type="checkbox" />
+            <span>企業勢のみ</span>
+          </label>
+          <label class="toggle">
+            <input id="verifiedOnly" type="checkbox" />
+            <span>確認済みのみ</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="agency-panel" aria-label="Agency ranking">
+          <div class="section-title">
+            <h2>Agencies</h2>
+            <span id="agencyCount"></span>
+          </div>
+          <div id="agencyList" class="agency-list"></div>
+        </aside>
+
+        <section class="results" aria-label="VTuber results">
+          <div class="section-title">
+            <h2>Results</h2>
+            <span id="resultCount"></span>
+          </div>
+          <div id="resultList" class="result-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <template id="vtuberTemplate">
+      <article class="vtuber-card">
+        <div class="avatar" aria-hidden="true"></div>
+        <div class="vtuber-body">
+          <div class="vtuber-head">
+            <div>
+              <h3></h3>
+              <p class="subtitle"></p>
+            </div>
+            <span class="badge"></span>
+          </div>
+          <p class="description"></p>
+          <div class="meta-grid"></div>
+          <div class="tag-row"></div>
+          <div class="account-row"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
