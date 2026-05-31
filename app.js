@@ -54,6 +54,8 @@ function fillSelect(select, values, allLabel) {
 
 function setup() {
   const vtubers = database.vtubers;
+  const params = new URLSearchParams(window.location.search);
+  state.search = params.get("q") || "";
   elements.generatedAt.textContent = `Generated ${database.generated_at || "-"}`;
   elements.totalCount.textContent = `${formatNumber(vtubers.length)} records`;
   elements.statTotal.textContent = formatNumber(vtubers.length);
@@ -64,6 +66,7 @@ function setup() {
   fillSelect(elements.agencySelect, uniqueSorted(vtubers.map((item) => item.agency_name)), "すべて");
   fillSelect(elements.languageSelect, uniqueSorted(vtubers.map((item) => item.language)), "すべて");
   fillSelect(elements.sourceSelect, uniqueSorted(vtubers.map((item) => item.source_type)), "すべて");
+  elements.searchInput.value = state.search;
 
   elements.searchInput.addEventListener("input", (event) => {
     state.search = event.target.value;
@@ -184,7 +187,10 @@ function renderVtuberCard(vtuber) {
     avatar.textContent = initials(vtuber);
   }
 
-  title.textContent = vtuber.name;
+  const titleLink = document.createElement("a");
+  titleLink.href = `vtubers/${vtuber.slug}/`;
+  titleLink.textContent = vtuber.name;
+  title.append(titleLink);
   subtitle.textContent = [vtuber.name_en, vtuber.agency_name || "所属未設定"].filter(Boolean).join(" / ");
   badge.textContent = vtuber.needs_review ? "要確認" : "確認済み";
   badge.classList.toggle("review", Boolean(vtuber.needs_review));
